@@ -1,0 +1,54 @@
+# Correlations
+install.packages("Hmisc")
+library(Hmisc)
+rcorr(as.matrix(bdl3[,3:31], type="spearman"))
+rcor2 = rcorr(as.matrix(bdlm2[,3:31], type="spearman"))
+matrix2 = print(rcor2$r, digits=1)  #the {Hmisc} doesn't allow to round values, therefore I foud a way to do it via the print() function
+
+
+
+library(Hmisc)
+rcor3 = rcorr(as.matrix(bdlm2[,3:33], type="spearman"))
+matrix3 = print(rcor3$r, digits=1)
+
+
+
+## CORRELOGRAM _ method 1
+install.packages("GGally")
+library(GGally)
+ggcorr(matrix2, method = c("everything", "spearman")) 
+ggcorr(matrix3, method = c("everything", "spearman")) 
+
+
+
+
+## CORRELOGRAM _ method 2
+install.packages("ggcorrplot")
+library(ggplot2)
+library(ggcorrplot)
+
+
+# Full sample
+ggcorrplot(matrix2, hc.order = FALSE,
+           type ="lower",
+           lab = T,
+           lab_size = 2,
+           method="square",
+           colors = c("tomato2", "white", "turquoise"),
+           title = "Correlogram full sample",
+           ggtheme = theme_bw)
+
+
+# Depression sample
+ggcorrplot(matrix3, hc.order = FALSE,
+            type ="lower",
+            lab = T,
+            lab_size = 2,
+            method="square",
+           colors = c("tomato2", "white", "turquoise"),
+           title = "Correlogram sub_sample",
+           ggtheme = theme_bw)
+
+
+
+colors()  # see all the colors that R proposes
